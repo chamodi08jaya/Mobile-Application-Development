@@ -31,6 +31,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.ErrorManager;
@@ -70,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         final EditText e8 = (EditText) findViewById(R.id.dob);
 
         final Button b1 = findViewById(R.id.submit);
+
+
 
 
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -192,9 +195,54 @@ public class MainActivity extends AppCompatActivity {
                                 // startActivity(new Intent(MainActivity.this, MyOtherActivity.class));
                                 Intent activity2Intent = new Intent(getApplicationContext(), Activity2.class);
                                 startActivity(activity2Intent);
+
+
+                                //covnert to string values
+                                String Id = e1.getText().toString();
+                                String AccountNumber = e2.getText().toString();
+                                String firstname = e3.getText().toString();
+                                String lastname = e4.getText().toString();
+                                String phonenumber = e5.getText().toString();
+                                String emailaddress = e6.getText().toString();
+                                String address = e7.getText().toString();
+                                String dob = e8.getText().toString();
+                                String salutation = text.getText().toString();
+
+
+                                String combinedValue = AccountNumber + firstname + lastname + phonenumber + emailaddress + address + dob + salutation;
+
+                                //Stored in the Hashmap
+                                HashMap<String, String> data = new HashMap<String, String>();
+
+                                data.put("AccountNumber", AccountNumber);
+                                data.put("firstname", firstname);
+                                data.put("lastname", lastname);
+                                data.put("phonenumber", phonenumber);
+                                data.put("emailaddress", emailaddress);
+                                data.put("address", address);
+                                data.put("dob", dob);
+                                data.put("salutation", salutation);
+
+                                //Bundle is used to pass the data in intent
+                                Bundle mBundle = new Bundle();
+                                mBundle.putString("ID",Id);
+                                mBundle.putString("Data", String.valueOf(data));
+
+
+                                Intent intent = new Intent(MainActivity.this, Postmaster.class);
+                                intent.putExtras(mBundle);
+                               // intent.putExtra("h", data);
+                                startActivity(intent);
+
+
+
+
+
+
+
+
                             }
                         });
-
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
